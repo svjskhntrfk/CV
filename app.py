@@ -1,5 +1,6 @@
-from flask import Flask, render_template, redirect, session
+from flask import Flask, render_template, redirect, session, request
 from datetime import datetime
+
 
 app = Flask(__name__)
 app.secret_key = 'sosiska'
@@ -69,12 +70,9 @@ TRANSLATIONS = {
 
 @app.route("/")
 def main():
-    time_cur = datetime.now().hour
     if 'theme' not in session:
-        if time_cur > 18 or time_cur < 6:
-            session['theme'] = 'dark-theme'
-        else:
-            session['theme'] = 'light-theme'
+        session['theme'] = request.cookies.get('theme')
+        print(session['theme'])
     if 'lang' not in session:
         session['lang'] = 'ru'
     return render_template("index.html", 
