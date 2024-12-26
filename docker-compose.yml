@@ -1,0 +1,16 @@
+version: '3.8'
+
+services:
+  web:
+    build: .
+    container_name: flask-portfolio
+    ports:
+      - "8080:5000"
+    volumes:
+      - .:/app
+      - ./static:/app/static
+    environment:
+      - FLASK_APP=app.py
+      - FLASK_ENV=production
+      - PYTHONUNBUFFERED=1
+    restart: unless-stopped 
